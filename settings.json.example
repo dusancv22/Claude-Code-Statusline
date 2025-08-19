@@ -1,0 +1,22 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "node \"/path/to/your/statusline.js\"",
+    "padding": 0
+  },
+  "model": "sonnet",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'File modified'",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

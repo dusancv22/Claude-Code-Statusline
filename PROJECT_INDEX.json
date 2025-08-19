@@ -1,0 +1,264 @@
+{
+  "indexed_at": "2025-08-19T13:45:18.792303",
+  "root": ".",
+  "project_structure": {
+    "type": "tree",
+    "root": ".",
+    "tree": [
+      ".",
+      "+-- README.md"
+    ]
+  },
+  "documentation_map": {
+    "CHANGELOG.md": {
+      "sections": [
+        "Changelog",
+        "[1.0.0] - 2025-08-19",
+        "Added",
+        "Technical Details",
+        "Documentation",
+        "Files",
+        "[Unreleased]",
+        "Planned Features",
+        "Ideas for Future Versions",
+        "Template for Future Releases"
+      ],
+      "architecture_hints": []
+    },
+    "CLAUDE.md": {
+      "sections": [
+        "CLAUDE.md",
+        "Project Overview",
+        "Architecture",
+        "Core Components",
+        "Key Implementation Details",
+        "Timer Algorithm",
+        "Error Handling",
+        "Development Commands",
+        "Testing",
+        "Run comprehensive test suite"
+      ],
+      "architecture_hints": [
+        "I/O"
+      ]
+    },
+    "INSTALL.md": {
+      "sections": [
+        "Quick Installation Guide",
+        "1. Copy Files",
+        "Copy the main script to your preferred location",
+        "Make it executable (Linux/macOS only)",
+        "2. Configure Claude Code",
+        "3. Test",
+        "Test the script manually",
+        "Expected output: \ud83e\udd16 Sonnet | \ud83c\udf3f main | \u23f3 5:00",
+        "4. Restart Claude Code",
+        "Quick Customization"
+      ],
+      "architecture_hints": []
+    },
+    "PROJECT_OVERVIEW.md": {
+      "sections": [
+        "Claude Code Status Line - Project Overview",
+        "Project Summary",
+        "Quick Facts",
+        "Key Features",
+        "\ud83e\udd16 Model Display",
+        "\ud83c\udf3f Git Integration",
+        "\u23f3 Session Timer",
+        "Combined Output",
+        "Architecture",
+        "File Structure"
+      ],
+      "architecture_hints": [
+        "I/O"
+      ]
+    },
+    "README.md": {
+      "sections": [
+        "Claude Code Custom Status Line",
+        "Overview",
+        "Files",
+        "Requirements",
+        "Installation",
+        "Quick Install (One-Line)",
+        "Manual Installation",
+        "How It Works",
+        "Architecture",
+        "Input Data Structure"
+      ],
+      "architecture_hints": []
+    },
+    "TROUBLESHOOTING.md": {
+      "sections": [
+        "Troubleshooting Guide",
+        "Common Issues",
+        "\u274c Status line not appearing",
+        "\u274c \"command not found\" error",
+        "\u274c Timer showing wrong time",
+        "\u274c Git branch not detected",
+        "\u274c Permission denied errors",
+        "\u274c Script crashes or shows errors",
+        "Debugging Steps",
+        "1. Test Basic Functionality"
+      ],
+      "architecture_hints": []
+    }
+  },
+  "directory_purposes": {},
+  "stats": {
+    "total_files": 6,
+    "total_directories": 1,
+    "fully_parsed": {
+      "javascript": 3
+    },
+    "listed_only": {
+      "shell": 1,
+      "json": 2
+    },
+    "markdown_files": 6
+  },
+  "files": {
+    "install.js": {
+      "language": "javascript",
+      "parsed": false
+    },
+    "install.sh": {
+      "language": "shell",
+      "parsed": false
+    },
+    "PROJECT_INDEX.json": {
+      "language": "json",
+      "parsed": false
+    },
+    "statusline.js": {
+      "language": "javascript",
+      "parsed": true,
+      "imports": [
+        "fs",
+        "path"
+      ],
+      "functions": {
+        "getGitBranch": "(currentDir)",
+        "getSessionCountdown": {
+          "calls": [
+            "getSessionInfo",
+            "updateSessionInfo"
+          ],
+          "signature": "()"
+        },
+        "getSessionInfo": {
+          "calls": [
+            "startNewSession"
+          ],
+          "signature": "()",
+          "called_by": [
+            "getSessionCountdown"
+          ]
+        },
+        "startNewSession": {
+          "signature": "(sessionFile, now = new Date()",
+          "called_by": [
+            "getSessionInfo"
+          ]
+        },
+        "updateSessionInfo": {
+          "signature": "(data)",
+          "called_by": [
+            "getSessionCountdown"
+          ]
+        }
+      },
+      "classes": {},
+      "variables": [
+        "fs",
+        "path",
+        "input",
+        "data",
+        "modelDisplay",
+        "modelId",
+        "modelEmoji",
+        "modelInfo",
+        "gitInfo",
+        "sessionTime",
+        "statusLine",
+        "gitDir",
+        "headPath",
+        "headContent",
+        "branchName",
+        "now",
+        "sessionInfo",
+        "fiveHours",
+        "currentBlockStart",
+        "elapsed",
+        "blockNumber",
+        "scheduledBlockStart",
+        "nextBlockStart",
+        "timeRemaining",
+        "hours",
+        "minutes",
+        "sessionFile",
+        "lastActivity",
+        "totalElapsed",
+        "currentBlockNumber",
+        "lastActiveBlockNumber",
+        "sessionData"
+      ],
+      "call_graph": {}
+    },
+    "test-statusline.js": {
+      "language": "javascript",
+      "parsed": true,
+      "purpose": "Test file",
+      "imports": [
+        "child_process",
+        "path"
+      ],
+      "functions": {
+        "runTest": {
+          "signature": "async (test)",
+          "called_by": [
+            "runAllTests"
+          ]
+        },
+        "runAllTests": {
+          "calls": [
+            "runTest"
+          ],
+          "signature": "async ()"
+        }
+      },
+      "classes": {},
+      "variables": [
+        "path",
+        "statuslineScript",
+        "tests",
+        "child",
+        "stdout",
+        "stderr",
+        "i",
+        "test",
+        "result",
+        "start",
+        "end"
+      ],
+      "call_graph": {}
+    },
+    ".claude\\settings.local.json": {
+      "language": "json",
+      "parsed": false,
+      "purpose": "Configuration"
+    }
+  },
+  "dependency_graph": {
+    "statusline.js": [
+      "fs",
+      "path"
+    ],
+    "test-statusline.js": [
+      "child_process",
+      "path"
+    ]
+  },
+  "staleness_check": 1754999118.826555
+}
