@@ -1,5 +1,5 @@
 {
-  "indexed_at": "2025-08-19T13:45:18.792303",
+  "indexed_at": "2025-08-19T13:55:12.429753",
   "root": ".",
   "project_structure": {
     "type": "tree",
@@ -107,14 +107,14 @@
   },
   "directory_purposes": {},
   "stats": {
-    "total_files": 6,
+    "total_files": 5,
     "total_directories": 1,
     "fully_parsed": {
       "javascript": 3
     },
     "listed_only": {
       "shell": 1,
-      "json": 2
+      "json": 1
     },
     "markdown_files": 6
   },
@@ -243,11 +243,6 @@
         "end"
       ],
       "call_graph": {}
-    },
-    ".claude\\settings.local.json": {
-      "language": "json",
-      "parsed": false,
-      "purpose": "Configuration"
     }
   },
   "dependency_graph": {
@@ -260,5 +255,5 @@
       "path"
     ]
   },
-  "staleness_check": 1754999118.826555
+  "staleness_check": 1754999712.476114
 }
