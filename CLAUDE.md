@@ -15,7 +15,8 @@ Claude Code Status Line - A Node.js custom status line implementation for Claude
    - Extracts model info and determines emoji (🤖 Sonnet, 🧠 Opus)
    - Detects git branch by reading `.git/HEAD` directly
    - Implements 5-hour scheduled block timer with persistence
-   - Outputs formatted string: `{model} | {git} | {timer}`
+   - **NEW**: Displays session cost information when available
+   - Outputs formatted string: `{model} | {git} | {timer} | {cost}`
 
 2. **Session Management** - Uses `~/.claude-session-time` for persistence:
    - Tracks `currentBlockStart`, `lastActivity`, `currentScheduledBlock`
@@ -30,6 +31,16 @@ Claude Code Status Line - A Node.js custom status line implementation for Claude
 - **Block progression**: Automatic advancement (Block 1 → Block 2 → Block 3...)
 - **Reset logic**: Only resets if user skips entire block (lines 134-137 in statusline.js)
 - **Time calculation**: Uses mathematical approach to determine current block and remaining time
+
+### Cost Display (NEW)
+- **Multiple sources**: Checks `cost`, `usage`, `session`, and `tokens` fields
+- **Smart formatting**: 
+  - Costs < $0.01 show 4 decimal places
+  - Costs < $1 show 3 decimal places  
+  - Costs ≥ $1 show 2 decimal places
+- **Token display**: Shows as "X.XK" or "X.XM" tokens
+- **Combined display**: Shows both cost AND tokens when both are available
+- **Graceful fallback**: Silently omits cost info if not available
 
 ### Error Handling
 - All functions have try/catch with graceful fallbacks
@@ -90,9 +101,13 @@ if (modelId.toLowerCase().includes('opus')) {
 const fiveHours = 5 * 60 * 60 * 1000; // Change multiplier for different durations
 ```
 
-### Output Format (line 31)
+### Output Format (lines 34-38)
 ```javascript
-const statusLine = `${modelInfo} | ${gitInfo} | ${sessionTime}`;
+const parts = [modelInfo, gitInfo, sessionTime];
+if (costInfo) {
+    parts.push(costInfo);
+}
+const statusLine = parts.join(' | ');
 ```
 
 ## Important Notes

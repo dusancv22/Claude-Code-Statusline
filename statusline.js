@@ -27,8 +27,15 @@ process.stdin.on('end', () => {
         // Get session time countdown
         const sessionTime = getSessionCountdown();
         
+        // Extract cost information if available
+        const costInfo = getCostInfo(data);
+        
         // Combine all parts
-        const statusLine = `${modelInfo} | ${gitInfo} | ${sessionTime}`;
+        const parts = [modelInfo, gitInfo, sessionTime];
+        if (costInfo) {
+            parts.push(costInfo);
+        }
+        const statusLine = parts.join(' | ');
         
         console.log(statusLine);
         
@@ -36,6 +43,35 @@ process.stdin.on('end', () => {
         console.log(`🚨 Status Error: ${error.message}`);
     }
 });
+
+function getCostInfo(data) {
+    try {
+        // Check for Claude Code's total_cost_usd field
+        if (data.cost && data.cost.total_cost_usd !== undefined) {
+            return `💰 $${formatCost(data.cost.total_cost_usd)}`;
+        }
+        
+        return null; // No cost information found
+        
+    } catch (error) {
+        return null; // Silently fail if extraction fails
+    }
+}
+
+function formatCost(cost) {
+    // Format cost to 2-4 decimal places based on size
+    if (typeof cost === 'number') {
+        if (cost < 0.01) {
+            return cost.toFixed(4);
+        } else if (cost < 1) {
+            return cost.toFixed(3);
+        } else {
+            return cost.toFixed(2);
+        }
+    }
+    return String(cost);
+}
+
 
 function getGitBranch(currentDir) {
     try {

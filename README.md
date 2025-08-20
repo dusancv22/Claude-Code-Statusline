@@ -1,6 +1,6 @@
 # Claude Code Custom Status Line
 
-A Node.js-based custom status line for Claude Code that displays model information, git branch status, and a 5-hour session countdown timer.
+A Node.js-based custom status line for Claude Code that displays model information, git branch status, session cost, and a 5-hour countdown timer.
 
 ## Overview
 
@@ -9,11 +9,15 @@ This status line provides real-time information about your Claude Code session:
 - **Model Display**: Shows current model (Sonnet 🤖 or Opus 🧠) with distinctive emojis
 - **Git Branch**: Shows current git branch (🌿 branch-name) or "📂 No Git" if not in a repository
 - **Session Timer**: Displays countdown timer (⏳ H:MM) for 5-hour session blocks
+- **Session Cost**: Shows current session cost (💰 $X.XX) and/or token usage (📊 X.XK tokens) when available
 
 **Example Output:**
 ```
 🤖 Sonnet | 🌿 main | ⏳ 4:32
 🧠 Opus | 📂 No Git | ⏳ 2:15
+🤖 Sonnet | 🌿 dev | ⏳ 3:45 | 💰 $0.054
+🧠 Opus | 🌿 main | ⏳ 1:30 | 📊 125.0K
+🤖 Sonnet | 🌿 main | ⏳ 2:45 | 💰 $0.125 | 📊 15.2K
 ```
 
 ## Files
@@ -424,6 +428,14 @@ This implementation is provided as-is for educational and personal use. Modify a
 
 ## Changelog
 
+### v1.1.0 (2025-08-20)
+- Added session cost display support (💰 $X.XX)
+- Added token usage display (📊 X.XK tokens) 
+- Shows both cost AND tokens when both are available
+- Smart cost formatting based on amount
+- Multiple cost field detection (cost, usage, session, tokens)
+- Graceful fallback when cost info unavailable
+
 ### v1.0.0 (2025-08-19)
 - Initial implementation
 - Model detection with emojis (Sonnet 🤖, Opus 🧠)
@@ -436,4 +448,4 @@ This implementation is provided as-is for educational and personal use. Modify a
 
 ---
 
-*Last updated: 2025-08-19*
+*Last updated: 2025-08-20*

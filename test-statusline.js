@@ -45,6 +45,55 @@ const tests = [
         input: {
             workspace: { current_dir: '.' }
         }
+    },
+    {
+        name: 'With session cost (direct cost field)',
+        input: {
+            model: { id: 'claude-sonnet-4-20250514', display_name: 'Sonnet' },
+            workspace: { current_dir: '.' },
+            cost: { session: 0.0542 }
+        }
+    },
+    {
+        name: 'With usage cost and tokens (should show both)',
+        input: {
+            model: { id: 'claude-opus-4-1', display_name: 'Opus' },
+            workspace: { current_dir: '.' },
+            usage: { cost: 0.125, tokens: { total: 15000 } }
+        }
+    },
+    {
+        name: 'With token count only',
+        input: {
+            model: { id: 'claude-sonnet-4-20250514', display_name: 'Sonnet' },
+            workspace: { current_dir: '.' },
+            tokens: { input: 5000, output: 2500, total: 7500 }
+        }
+    },
+    {
+        name: 'With session cost in session object',
+        input: {
+            model: { id: 'claude-opus-4-1', display_name: 'Opus' },
+            workspace: { current_dir: '.' },
+            session: { cost: 0.0089, id: 'test-session' }
+        }
+    },
+    {
+        name: 'With large token count (should format as K)',
+        input: {
+            model: { id: 'claude-sonnet-4-20250514', display_name: 'Sonnet' },
+            workspace: { current_dir: '.' },
+            token_usage: { total: 125000 }
+        }
+    },
+    {
+        name: 'With cost and separate token field (should show both)',
+        input: {
+            model: { id: 'claude-opus-4-1', display_name: 'Opus' },
+            workspace: { current_dir: '.' },
+            cost: { session: 0.235 },
+            tokens: { input: 80000, output: 45000 }
+        }
     }
 ];
 
@@ -106,6 +155,8 @@ async function runAllTests() {
     console.log('   🤖 Sonnet | 🌿 branch | ⏳ X:XX (for Sonnet in git repo)');
     console.log('   🧠 Opus | 🌿 branch | ⏳ X:XX (for Opus in git repo)');
     console.log('   🤖 Model | 📂 No Git | ⏳ X:XX (for non-git directory)');
+    console.log('   🤖 Model | 🌿 branch | ⏳ X:XX | 💰 $X.XX (with cost info)');
+    console.log('   🤖 Model | 🌿 branch | ⏳ X:XX | 📊 X.XK tokens (with token count)');
     console.log('');
     
     // Performance test
