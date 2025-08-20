@@ -9,15 +9,15 @@ This status line provides real-time information about your Claude Code session:
 - **Model Display**: Shows current model (Sonnet 🤖 or Opus 🧠) with distinctive emojis
 - **Git Branch**: Shows current git branch (🌿 branch-name) or "📂 No Git" if not in a repository
 - **Session Timer**: Displays countdown timer (⏳ H:MM) for 5-hour session blocks
-- **Session Cost**: Shows current session cost (💰 $X.XX) and/or token usage (📊 X.XK tokens) when available
+- **Session Cost**: Shows current session cost (💰 $X.XX) when available
 
 **Example Output:**
 ```
 🤖 Sonnet | 🌿 main | ⏳ 4:32
 🧠 Opus | 📂 No Git | ⏳ 2:15
 🤖 Sonnet | 🌿 dev | ⏳ 3:45 | 💰 $0.054
-🧠 Opus | 🌿 main | ⏳ 1:30 | 📊 125.0K
-🤖 Sonnet | 🌿 main | ⏳ 2:45 | 💰 $0.125 | 📊 15.2K
+🧠 Opus | 🌿 main | ⏳ 1:30 | 💰 $0.125
+🤖 Sonnet | 🌿 main | ⏳ 2:45 | 💰 $0.287
 ```
 
 ## Files
