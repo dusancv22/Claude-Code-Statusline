@@ -4,43 +4,41 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Claude Code Status Line - A Node.js custom status line implementation for Claude Code that displays model type (Sonnet/Opus), git branch status, and a 5-hour session countdown timer.
+Claude Code Status Line - A lightweight Node.js custom status line for Claude Code that displays model type (Sonnet/Opus), git branch status, session cost, and a 5-hour countdown timer. No external dependencies required.
 
 ## Architecture
 
 ### Core Components
 
-1. **statusline.js** - Main implementation that:
+1. **statusline.js** - Main implementation (210 lines) that:
    - Receives JSON input from Claude Code via stdin
    - Extracts model info and determines emoji (🤖 Sonnet, 🧠 Opus)
-   - Detects git branch by reading `.git/HEAD` directly
+   - Detects git branch by reading `.git/HEAD` directly (no git command needed)
    - Implements 5-hour scheduled block timer with persistence
-   - **NEW**: Displays session cost information when available
+   - Displays session cost from `data.cost.total_cost_usd` field
    - Outputs formatted string: `{model} | {git} | {timer} | {cost}`
 
 2. **Session Management** - Uses `~/.claude-session-time` for persistence:
    - Tracks `currentBlockStart`, `lastActivity`, `currentScheduledBlock`
    - Implements scheduled 5-hour blocks (not activity-based)
-   - Resets only after complete inactivity for entire block
-   - Mathematical block scheduling algorithm in `getSessionCountdown()`
+   - Resets only after complete inactivity for entire block (lines 171-173)
+   - Mathematical block scheduling algorithm in `getSessionCountdown()` (lines 105-148)
 
 ## Key Implementation Details
 
 ### Timer Algorithm
 - **Scheduled blocks**: Blocks run on fixed 5-hour intervals from initial start
 - **Block progression**: Automatic advancement (Block 1 → Block 2 → Block 3...)
-- **Reset logic**: Only resets if user skips entire block (lines 134-137 in statusline.js)
+- **Reset logic**: Only resets if user skips entire block (> lastActiveBlock + 1)
 - **Time calculation**: Uses mathematical approach to determine current block and remaining time
 
-### Cost Display (NEW)
-- **Multiple sources**: Checks `cost`, `usage`, `session`, and `tokens` fields
-- **Smart formatting**: 
+### Cost Display
+- **Source field**: Reads from `data.cost.total_cost_usd` (lines 49-52)
+- **Smart formatting** (lines 61-72): 
   - Costs < $0.01 show 4 decimal places
   - Costs < $1 show 3 decimal places  
   - Costs ≥ $1 show 2 decimal places
-- **Token display**: Shows as "X.XK" or "X.XM" tokens
-- **Combined display**: Shows both cost AND tokens when both are available
-- **Graceful fallback**: Silently omits cost info if not available
+- **Graceful fallback**: Returns null if field not available
 
 ### Error Handling
 - All functions have try/catch with graceful fallbacks
@@ -81,8 +79,9 @@ cp statusline.js ~/.claude/statusline.js
 ```
 
 ## File Structure
-- `statusline.js` - Main implementation (174 lines)
-- `test-statusline.js` - Test suite with 5 test cases
+- `statusline.js` - Main implementation (210 lines)
+- `test-statusline.js` - Comprehensive test suite (174 lines, 11 test cases including cost/token tests)
+- `install.js` - Cross-platform installer script
 - `settings.json.example` - Claude Code configuration template
 - Documentation: README.md, INSTALL.md, TROUBLESHOOTING.md, PROJECT_OVERVIEW.md, CHANGELOG.md
 
@@ -96,7 +95,7 @@ if (modelId.toLowerCase().includes('opus')) {
 }
 ```
 
-### Timer Duration (line 79)
+### Timer Duration (line 115)
 ```javascript
 const fiveHours = 5 * 60 * 60 * 1000; // Change multiplier for different durations
 ```
